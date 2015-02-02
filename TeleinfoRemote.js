@@ -12,6 +12,7 @@ function sendEco ( url, retCmd ) {
 		console.log ( '\nTeleinfoRemote [erreur] => ' + error.message );
 	});
 }
+
 exports.init = function ( SARAH ) {
 
 	if ( !exports.tarif ) exports.tarif = 'Demandez à SARAH' ;
@@ -50,7 +51,7 @@ exports.action = function ( data , callback , config , SARAH ) {
 					data.ttsAction += str + ' ampère sur la phase 3';
 				break;
 			default :
-				if ( data.tag = 'T1_PPAP' ) exports.conso = str + ' VA';
+				if ( data.tag == 'T1_PPAP' ) exports.conso = str + ' VA';
 				data.ttsAction = data.ttsAction.replace ( /%/, str);
 		}
 		console.log ( '\nTeleinfoRemote [OK] => ' + data.ttsAction );
