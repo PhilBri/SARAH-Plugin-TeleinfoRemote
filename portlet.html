@@ -1,0 +1,28 @@
+<h3 class='default'><%= key %> - <%= module.version %></h3>
+<% stylesheet('assets/'+key+'/portlet.css') %>
+
+<%	
+	var plugin = SARAH.ConfigManager.getModule(key);
+	var tarif = plugin.tarif;
+	var conso = plugin.conso;
+%>
+
+<div>	
+	<span class="title_tarif">Tarif en cours : &nbsp;</span>
+</div>
+
+<div>
+	<span class="info_tarif"><%= tarif %></span>
+</div>
+
+<div>	
+	<span class="title_conso">Consommation : &nbsp;</span>
+</div>
+
+<div>
+	<span class="info_conso"><%= conso %></span>
+</div>
+
+<div>
+	<button onclick="sarah/TeleinfoRemote?tag=T1_PPAP" title="Mise à jour" class="ajax"><span><span>Bouton maison</span></span></button>
+</div>

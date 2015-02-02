@@ -1,0 +1,27 @@
+<grammar version="1.0" xml:lang="fr-FR" mode="voice" root="ruleTeleinfoRemote" xmlns="http://www.w3.org/2001/06/grammar" tag-format="semantics/1.0">
+  <rule id="ruleTeleinfoRemote" scope="public">
+  <example>Quelle est la puissance</example>
+  <tag>out.action=new Object(); </tag>
+  <item>Sarah</item>
+    
+    <one-of>
+      <item>Quel est le tarif en cours
+        <tag>out.action.tag="T1_PTEC" ;out.action.ttsAction="Vous étes en tarif %";</tag>
+      </item>
+      <item>Quelle est la consommation
+        <tag>out.action.tag="T1_PPAP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
+      </item>
+      <item>Quelle est la puissance
+        <tag>out.action.tag="T1_IINST" ; out.action.ttsAction="La puissance instantanée est de % ampères";</tag>
+      </item>
+      <item>Quelle est la puissance souscrite
+        <tag>out.action.tag="T1_ISOUSC" ; out.action.ttsAction="La puissance souscrite est de % ampères";</tag>
+      </item>
+      <item>Quelle est l'intensité maxi
+        <tag>out.action.tag="T1_IMAX" ; out.action.ttsAction="L'intensité maxi à été de % ampères";</tag>
+      </item>
+    </one-of>
+
+    <tag>out.action._attributes.uri="http://127.0.0.1:8080/sarah/TeleinfoRemote";</tag>
+  </rule>
+</grammar>
