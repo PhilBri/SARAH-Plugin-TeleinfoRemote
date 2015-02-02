@@ -12,12 +12,14 @@ http://marketplace.sarah.encausse.net/store
 
 Démarrez SARAH et lancez l'interface Web du client http://127.0.0.1:8080/home
 
-Dans le portlet ImperiRemote, renseignez les champs suivants :
+Dans le portlet TeleinfoRemote, renseignez les champs suivants :
 ```
 - Host     : L'adresse (url) de votre Eco Devices Téléinfo.
 - User     : Votre nom d'utilisateur Téléinfo.
 - Password : Votre mot de passe Téléinfo.
 ```
+
+Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa taille.
 
 
 
