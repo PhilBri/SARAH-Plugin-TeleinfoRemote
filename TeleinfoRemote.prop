@@ -6,7 +6,7 @@
 			"Host" : "",
 			"User" : "",
 			"Password" : "",
-			"Timer" : "OFF";
+			"Timer" : "OFF",
 			"w" : 2
 		}
 	}
