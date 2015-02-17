@@ -33,23 +33,22 @@ window.onload=function() {
  
 function horloge(el) {
 	var str;
-	/*
 	var timer = SARAH.ConfigManager.getModule(key);
-	timer = timer.Timer/1000;
-	timer>60 ? str=timer+' minutes' : str=timer+' secondes';
-	$('#next_maj').html(str);
 
 	function actualiser() {
 		//var date = new Date();
 		//var str = date.getHours();
 		//str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
-
 		$('#img_logo').trigger('click'); 
 	}
 	if (!isNaN(timer)) {
+		timer = timer.Timer*1000;
+		timer>60 ? str=timer+' minutes' : str=timer+' secondes';
 		actualiser();
 		setInterval(actualiser,timer);
-	}*/
+	}
+	else str = timer;
+	$('#next_maj').html(str);
 }
 
 var x;
