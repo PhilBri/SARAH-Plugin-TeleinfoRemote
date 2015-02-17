@@ -2,10 +2,11 @@
 	"modules" : {
 		"TeleinfoRemote"  : {
 			"description" : "SARAH manage l'Eco Device TéléInfo",
-			"version" : "0.3",
+			"version" : "0.5",
 			"Host" : "",
 			"User" : "",
 			"Password" : "",
+			"Timer" : "OFF";
 			"w" : 2
 		}
 	}

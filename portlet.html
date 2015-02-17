@@ -1,28 +1,129 @@
-<h3 class='default'><%= key %> - <%= module.version %></h3>
 <% stylesheet('assets/'+key+'/portlet.css') %>
 
-<%	
+<%if(!SARAH.context.TeleinfoRemote.tab.OPTARIF){%>
+	<h3 class='default'><span class='plugin'><%= key %>&nbsp;-</span>
+		<span id="compteur"><%= SARAH.context.TeleinfoRemote.numCpt%></span>&nbsp;:
+		<span class="info_abo"><a>&nbsp;INDISPONIBLE&nbsp;</a></span>
+	</h3>
+<%}else{%>
+	<h3 class='default'><span class='plugin'><%= key %>&nbsp;-</span>
+		<span id="compteur"></span>&nbsp;:
+		<span class="info_abo">
+			<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;
+			<a>&nbsp;<span id="optarif"></span>&nbsp;</a>
+		</span>
+	</h3>
+
+
+<% 
 	var plugin = SARAH.ConfigManager.getModule(key);
-	var tarif = plugin.tarif;
-	var conso = plugin.conso;
+	var tabEco = SARAH.context.TeleinfoRemote;
+	var tabEco = SARAH.context.TeleinfoRemote;
+	var a = function(str,num){
+		return str.split(':')[num];
+	}
 %>
 
+<script type="text/javascript">
+
+window.onload=function() {
+	horloge('next_maj');
+	$('#img_logo').trigger('click');
+};
+ 
+function horloge(el) {
+	var str;
+	/*
+	var timer = SARAH.ConfigManager.getModule(key);
+	timer = timer.Timer/1000;
+	timer>60 ? str=timer+' minutes' : str=timer+' secondes';
+	$('#next_maj').html(str);
+
+	function actualiser() {
+		//var date = new Date();
+		//var str = date.getHours();
+		//str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+
+		$('#img_logo').trigger('click'); 
+	}
+	if (!isNaN(timer)) {
+		actualiser();
+		setInterval(actualiser,timer);
+	}*/
+}
+
+var x;
+var y;
+$(document).ready(
+  function() {
+  	
+	$("#img_logo").click(function(){
+		$.getJSON( "sarah/TeleinfoRemote?need=1", function( data ) {
+			x=data;
+			$('#maj').html(x.maj);
+			$('#compteur').html(x.numCpt);
+			$('#optarif').html(x.tab.OPTARIF);
+			$('#isousc').html(x.tab.ISOUSC);
+			$("#conso").html(x.tab.PPAP);
+			$("#hchp").replaceWith(x.tab.PTEC.split(':').shift());
+			if ( x.tab.IINST.search('0 A')) y=x.tab.IINST; else y=x.tab.IINST1+x.tab.IINST2+x.tab.IINST3;
+			$("#iinst").html(y);
+			y=x.tab.PTEC.split(':').pop(); // y=coul_tempo
+			if(y) {
+				var z;
+				if(y!='#FFFFFF') z='$('.info_conso').css( "color"' ); else z=$('.default').css( "background-color" );
+				$(".hchp_coul a").css({"background-color": y, 'color': z.toString(),'font-size':'13px'});
+			}
+		});
+	});
+});
+//var auto_refresh = setInterval(
+//function() {
+//$("#").load('sarah/TeleinfoRemote?need=1');
+//$("#").load('sarah/TeleinfoRemote?need=1');
+//}, 60000); 
+</script>
+
 <div>	
-	<span class="title_tarif">Tarif en cours : &nbsp;</span>
+	<span class="title_encours">Mis à jour à&nbsp;
+		<a id="maj"></a>&nbsp;prochaine dans&nbsp;
+		<a id="next_maj"></a>
+	</span>
 </div>
 
 <div>
-	<span class="info_tarif"><%= tarif %></span>
+	<span class="info_conso">Tarif :
+		<span class="hchp_coul">
+			<a>&nbsp;<span id="hchp"></span>&nbsp;</a>
+			&nbsp;Conso.:
+		</span>
+		<span class="conso_ppap">
+			<a>&nbsp;<span  id="conso"></span>&nbsp;
+			</a>&nbsp;
+			<a>&nbsp;
+				<span id="iinst"></span>&nbsp;
+			</a>&nbsp;
+		</span>
+	</span>
 </div>
 
 <div>	
-	<span class="title_conso">Consommation : &nbsp;</span>
+	<span class="title_avenir">Options & infos :</span>
 </div>
 
 <div>
-	<span class="info_conso"><%= conso %></span>
+	<span class="info_tempo">Tempo :
+			<%if(tabEco.tab.DEMAIN.split(':').pop()=='#FAF0E6'){%>
+		<span style="border: 1px solid;color: #33A3EC">
+			&nbsp;<%= a(tabEco.tab.DEMAIN,1) %>&nbsp;</span><%}else{%>
+		<span style="background: <%= tabEco.tab.DEMAIN.split(':').pop() %>;border: 1px solid #33A3EC">
+			&nbsp;Demain&nbsp;</span><%}%>
+	</span>
 </div>
 
+<%}%>
+
 <div>
-	<button onclick="sarah/TeleinfoRemote?tag=T1_PPAP" title="Mise à jour" class="ajax"><span><span>Bouton maison</span></span></button>
+	<span class="logo" id="img_logo" title="Mettre à jour"></span>
 </div>
+

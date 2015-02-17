@@ -1,44 +1,103 @@
 
-.plugin-gridster.TeleinfoRemote .text {
-  background: #33A3EC;
-  left: 0; width: 100%; 
-  display: block;
-  text-align: center; 
+/*--- Page ---*/
+.plugin-gridster.TeleinfoRemote .front{
+  background-color: #FAF0E6; /* coquille d'oeuf */
+  background-color: #E6E6FA; /* Bleu trés clair */
 }
 
-.plugin-gridster.TeleinfoRemote .title_tarif {
-  position: absolute;
-  margin-top: -1px;
-  margin-left: 56px;
-  font-size: 15px; 
-  font-weight: bold;
+/*--- Compteur --*/
+.plugin-gridster.TeleinfoRemote .default {
+  font-weight     : bold;
 }
 
-.plugin-gridster.TeleinfoRemote .info_tarif {
-  color: #33A3EC; 
-  position: absolute;
-  margin-top: -1px;
-  margin-left: 170px;
-  font-weight: bold;
+/*--- Logo ---*/
+.plugin-gridster.TeleinfoRemote .logo {
+  position        : absolute;
+  background-color: inherit;
+  background      : url(img/maison.png) no-repeat center center;
+  width           : 45px;
+  height          : 45px;
+  opacity         : 0.7;
+  margin-top      : 10px;
+  margin-left     : -8px;
+  cursor          : pointer;
 }
 
-.plugin-gridster.TeleinfoRemote .title_conso {
+/*--- Nom du plugin ---*/
+.plugin-gridster.TeleinfoRemote .plugin {
+  font-weight     : normal;
+}
+
+/*--- Info Abo dans titre page ---*/
+.info_abo a {
+  background-color: #FF69B4;
+  color           : inherit;
+  border          : 1px solid #000;
+}
+
+/*--- Etiquetes de titre ---*/
+.title_avenir, .title_encours {
   position: absolute;
-  margin-top: 26px;
-  margin-left: 56px;
-  font-size: 15px; 
+  margin-left: 45px;
+  font-size: 10px; 
   font-weight: bold;
+  font-style: italic;
+}
+
+.plugin-gridster.TeleinfoRemote .title_encours {
+  margin-top: -5px;
+}
+
+.plugin-gridster.TeleinfoRemote .title_avenir {
+  margin-top: 35px;
+}
+
+/*--- etiquettes infos ---*/
+.info_conso, .info_tempo {
+  position: absolute;
+  margin-left: 45px;
+  font-weight: bold; 
+}
+
+.plugin-gridster.TeleinfoRemote .info_tempo {
+  margin-top: 52px;
 }
 
 .plugin-gridster.TeleinfoRemote .info_conso {
-  color: #33A3EC; 
+  margin-top: 12px;
+}
+
+.info_conso a {
+  /*color: #33A3EC;*/
+  border: 1px solid;"
+}
+
+.plugin-gridster.TeleinfoRemote .info_tarif {
+  /*color: #33A3EC;*/
   position: absolute;
-  margin-top: 26px;
-  margin-left: 170px;
+  margin-top: 0px;
+  margin-left: 150px;
   font-weight: bold;
 }
 
+
+.plugin-gridster.TeleinfoRemote .logo:hover {
+  position: absolute;
+  opacity: 0.3;
+  margin-left: -6px;
+  margin-top: 11px;
+}
+
 /*
+
+.plugin-gridster.TeleinfoRemote .text {
+  background: #E6E6FA;
+  left: 0;
+  width: 100%; 
+  display: block;
+  text-align: center;
+}
+
 .plugin-gridster.TeleinfoRemote .logo_sarah {
   position: absolute;
   z-index:0;
@@ -56,18 +115,19 @@
 
 /*-- button --*/
 button{
-  margin-top : 0px;
-  padding     : 0;
-  border      : 0;
+  margin-top : -5px;
+  margin-left: -7px;
+  padding     : 0px;
+  border      : 0px;
   background  : transparent;
-  font-family : inherit;
-  font-size   : 1em;
+  /*font-family : inherit;
+  font-size   : 1em;*/
   cursor      : pointer;
 }
 
 button::-moz-focus-inner{
-  padding : 0;
-  border  : 0;
+  padding : 0px;
+  border  : 0px;
 }
 
 button > span{

@@ -5,20 +5,32 @@
   <item>Sarah</item>
     
     <one-of>
+      <item>Met à jour les données télé info
+        <tag>out.action._attributes.tts="Mise à jour des données effectuée";</tag>
+      </item>
+      <item>Affiche le compteur 1
+        <tag>out.action.cpt="Compteur 1" ; out.action._attributes.tts="Affichage du compteur numéro 1,";</tag>
+      </item>
+      <item>Affiche le compteur 2
+        <tag>out.action.cpt="Compteur 2" ; out.action._attributes.tts="Affichage du compteur numéro 2,";</tag>
+      </item>
+      <item>Quelle est la couleur de demain
+        <tag>out.action.tag="DEMAIN" ; out.action.ttsAction="La couleur de demain est %";</tag>
+      </item>
       <item>Quel est le tarif en cours
-        <tag>out.action.tag="T1_PTEC" ;out.action.ttsAction="Vous étes en tarif %";</tag>
+        <tag>out.action.tag="PTEC" ; out.action.ttsAction="Vous étes en tarif %";</tag>
       </item>
       <item>Quelle est la consommation
-        <tag>out.action.tag="T1_PPAP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
+        <tag>out.action.tag="PPAP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
       </item>
       <item>Quelle est la puissance
-        <tag>out.action.tag="T1_IINST" ; out.action.ttsAction="La puissance instantanée est de % ampères";</tag>
+        <tag>out.action.tag="IINST" ; out.action.ttsAction="La puissance instantanée est de % ampères";</tag>
       </item>
       <item>Quelle est la puissance souscrite
-        <tag>out.action.tag="T1_ISOUSC" ; out.action.ttsAction="La puissance souscrite est de % ampères";</tag>
+        <tag>out.action.tag="ISOUSC" ; out.action.ttsAction="La puissance souscrite est de % ampères";</tag>
       </item>
       <item>Quelle est l'intensité maxi
-        <tag>out.action.tag="T1_IMAX" ; out.action.ttsAction="L'intensité maxi à été de % ampères";</tag>
+        <tag>out.action.tag="IMAX" ; out.action.ttsAction="L'intensité maxi à été de % ampères";</tag>
       </item>
     </one-of>
 
