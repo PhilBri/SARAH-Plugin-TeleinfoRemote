@@ -53,16 +53,6 @@ exports.action = function ( data , callback , config , SARAH ) {
 				}
 			}
 			SARAH.context.TeleinfoRemote.tab = tabExp;
-			// tests
-			SARAH.context.TeleinfoRemote.tab.PTEC = 'Heures Creuses:#00BFFF';
-			//SARAH.context.TeleinfoRemote.tab.OPTARIF = 'Tempo';
-			SARAH.context.TeleinfoRemote.tab.DEMAIN = 'Bleu:#00BFFF'
-			//SARAH.context.TeleinfoRemote.tab.IINST = '10 A';
-			//SARAH.context.TeleinfoRemote.numCpt = 'Compteur 2';
-			// tests end
-			console.log('\nValeurs :........................\n');
-			console.log(SARAH.context.TeleinfoRemote);
-			
 			callback({'tts':JSON.stringify(SARAH.context.TeleinfoRemote)});
 		});
 	}
