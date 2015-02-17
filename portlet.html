@@ -1,6 +1,7 @@
 <% stylesheet('assets/'+key+'/portlet.css') %>
 
 <%if(!SARAH.context.TeleinfoRemote.tab.OPTARIF){%>
+<% alert('erreur'); %>
 	<h3 class='default'><span class='plugin'><%= key %>&nbsp;-</span>
 		<span id="compteur"><%= SARAH.context.TeleinfoRemote.numCpt%></span>&nbsp;:
 		<span class="info_abo"><a>&nbsp;INDISPONIBLE&nbsp;</a></span>
@@ -14,7 +15,6 @@
 		</span>
 	</h3>
 
-
 <% 
 	var plugin = SARAH.ConfigManager.getModule(key);
 	var tabEco = SARAH.context.TeleinfoRemote;
@@ -27,29 +27,24 @@
 <script type="text/javascript">
 
 window.onload=function() {
-	horloge('next_maj');
+	//horloge('next_maj');
 	$('#img_logo').trigger('click');
 };
  
 function horloge(el) {
 	var str;
-	var timer = SARAH.ConfigManager.getModule(key);
 
 	function actualiser() {
-		//var date = new Date();
-		//var str = date.getHours();
-		//str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
-		$('#img_logo').trigger('click'); 
+		var date = new Date();
+		var str = date.getHours();
+		str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
+		//$('#img_logo').trigger('click'); 
 	}
-	if (!isNaN(timer)) {
-		timer = timer.Timer*1000;
-		timer>60 ? str=timer+' minutes' : str=timer+' secondes';
-		actualiser();
-		setInterval(actualiser,timer);
-	}
-	else str = timer;
-	$('#next_maj').html(str);
+	actualiser();
+	setInterval(actualiser,timer);
 }
+</script>
+<script>
 
 var x;
 var y;
@@ -65,12 +60,13 @@ $(document).ready(
 			$('#isousc').html(x.tab.ISOUSC);
 			$("#conso").html(x.tab.PPAP);
 			$("#hchp").replaceWith(x.tab.PTEC.split(':').shift());
-			if ( x.tab.IINST.search('0 A')) y=x.tab.IINST; else y=x.tab.IINST1+x.tab.IINST2+x.tab.IINST3;
+			x.tab.IINST.search('0 A') ? y=x.tab.IINST : y=x.tab.IINST1+x.tab.IINST2+x.tab.IINST3;
 			$("#iinst").html(y);
 			y=x.tab.PTEC.split(':').pop(); // y=coul_tempo
-			if(y) {
+			if(y!='#') {
+			//alert('y = ' + y);
 				var z;
-				if(y!='#FFFFFF') z='$('.info_conso').css( "color"' ); else z=$('.default').css( "background-color" );
+				y!='#FFFFFF' ? z=$('.info_conso').css( "color" ) : z=$('.default').css( "background-color" );
 				$(".hchp_coul a").css({"background-color": y, 'color': z.toString(),'font-size':'13px'});
 			}
 		});

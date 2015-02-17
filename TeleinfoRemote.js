@@ -6,8 +6,8 @@ var tabEco = {
 	'IINST2':'%-',
 	'IINST3':'% A',
 	'OPTARIF': 	{'HC..':'HC/HP','EJP.':'EJP','BBRX':'Tempo'},
-	'PTEC':{'TH':'Toutes Heures','HP':'Heures Pleines','HC':'Heures Creuses','HP':'Heures Pleines','HN':'Heures Normales',
-			'PM':'Pointe','HCJB':'Heures Creuses:#00BFFF','HPJB':'Heures Pleines:#00BFFF','HCJW':'Heures Creuses:#FFFFFF',
+	'PTEC':{'TH':'Toutes Heures:#','HP':'Heures Pleines:#','HC':'Heures Creuses:#','HP':'Heures Pleines:#','HN':'Heures Normales:#',
+			'PM':'Pointe:#','HCJB':'Heures Creuses:#00BFFF','HPJB':'Heures Pleines:#00BFFF','HCJW':'Heures Creuses:#FFFFFF',
 			'HPJW':'Heures Pleines:#FFFFFF','HCJR':'Heures Creuses:#FF0000','HPJR':'Heures Pleines:#FF0000'},
 	'DEMAIN':{'----':'indisponible:-----:#FAF0E6','Bleu':'Bleu:#00BFFF','Rouge':'Rouge:#FF0000','Blanc':'Blanc:#FFFFFF'},
 	'HHPHC':'%'},
@@ -23,7 +23,7 @@ exports.init = function ( SARAH ) {
 exports.action = function ( data , callback , config , SARAH ) {
 	if (data.cpt) SARAH.context.TeleinfoRemote.numCpt = data.cpt;
 	SARAH.context.TeleinfoRemote.numCpt == 'Compteur 1' ? cpt = 'T1' : cpt = 'T2';
-	SARAH.context.TeleinfoRemote.maj = require('moment')().format('HH[h]:mm');
+	SARAH.context.TeleinfoRemote.maj = require('moment')().format('HH[h]mm');
 
 	if ( !cfg.Host || !cfg.User || !cfg.Password ) {
 		console.log ( "\nTeleinfoRemote [Erreur] => Hote ou User / Password non paramétré !" );
@@ -52,7 +52,7 @@ exports.action = function ( data , callback , config , SARAH ) {
 					console.log ( '\nTeleinfoRemote [OK] => ' + data.ttsAction.replace('%',reg) );
 				}
 			}
-			SARAH.context.TeleinfoRemote.tab = tabExp;
+			SARAH.context.TeleinfoRemote.tab = tabExp;			
 			callback({'tts':JSON.stringify(SARAH.context.TeleinfoRemote)});
 		});
 	}
