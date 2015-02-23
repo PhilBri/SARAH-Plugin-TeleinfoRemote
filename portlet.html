@@ -1,124 +1,130 @@
 <% stylesheet('assets/'+key+'/portlet.css') %>
 
 <%if(!SARAH.context.TeleinfoRemote.tab.OPTARIF){%>
-<% alert('erreur'); %>
-	<h3 class='default'><span class='plugin'><%= key %>&nbsp;-</span>
-		<span id="compteur"><%= SARAH.context.TeleinfoRemote.numCpt%></span>&nbsp;:
-		<span class="info_abo"><a>&nbsp;INDISPONIBLE&nbsp;</a></span>
-	</h3>
-<%}else{%>
-	<h3 class='default'><span class='plugin'><%= key %>&nbsp;-</span>
-		<span id="compteur"></span>&nbsp;:
-		<span class="info_abo">
-			<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;
-			<a>&nbsp;<span id="optarif"></span>&nbsp;</a>
+	<div class='default'>
+		<span class='plugin'>Téléinfo&nbsp;-
+			<span class="info_abo">
+				<a>&nbsp;<span id="compteur"><%= SARAH.context.TeleinfoRemote.numCpt%></span>&nbsp;</a>&nbsp;:
+				<a>&nbsp;INDISPONIBLE&nbsp;</a>
+			</span>
 		</span>
-	</h3>
-
-<% 
-	var plugin = SARAH.ConfigManager.getModule(key);
-	var tabEco = SARAH.context.TeleinfoRemote;
-	var tabEco = SARAH.context.TeleinfoRemote;
-	var a = function(str,num){
-		return str.split(':')[num];
-	}
-%>
+	</div>
+<%}else{%>
+	<div class='default'>
+		<span class='plugin'>&nbsp;&nbsp;Téléinfo&nbsp;-
+			<span class="info_abo">
+				<a>&nbsp;<span id="compteur"></span>&nbsp;</a>&nbsp;:
+				<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;
+				<a>&nbsp;<span id="optarif"></span>&nbsp;</a>&nbsp;
+				<a>&nbsp;<span id="mono_tri"></span>&nbsp;</a>
+			</span>
+		</span>
+	</div>
 
 <script type="text/javascript">
 
 window.onload=function() {
-	//horloge('next_maj');
-	$('#img_logo').trigger('click');
+	horloge();
+	need_data();
 };
  
-function horloge(el) {
-	var str;
+function horloge() {
+	var timer = <%- JSON.stringify(SARAH.ConfigManager.getConfig().modules.TeleinfoRemote.Timer) %>;
+	if (isNaN(timer)){
+		$('#timer_on').html(' Timer :');
+		$('#next_maj').html('OFF')
+	} else {
+		$('#timer_on').html(' prochaine dans :');
+		my_timer=timer*60;
+		var str=my_timer;
 
-	function actualiser() {
-		var date = new Date();
-		var str = date.getHours();
-		str += ':'+(date.getMinutes()<10?'0':'')+date.getMinutes();
-		//$('#img_logo').trigger('click'); 
+		function actualiser() {
+			my_timer > 60 ? str= Math.floor(my_timer/60) + 'm '+ my_timer % 60 + 's' : str = (my_timer<10?'0':'') + my_timer +'s';
+			$('#next_maj').html(str); 
+			if (my_timer === 0) {my_timer=timer*60; str=my_timer;$('#img_logo').trigger('click');};
+			my_timer-=1;
+		}
+		setInterval(actualiser, 1000);
 	}
-	actualiser();
-	setInterval(actualiser,timer);
 }
-</script>
-<script>
 
-var x;
-var y;
-$(document).ready(
-  function() {
-  	
-	$("#img_logo").click(function(){
-		$.getJSON( "sarah/TeleinfoRemote?need=1", function( data ) {
-			x=data;
-			$('#maj').html(x.maj);
-			$('#compteur').html(x.numCpt);
-			$('#optarif').html(x.tab.OPTARIF);
-			$('#isousc').html(x.tab.ISOUSC);
-			$("#conso").html(x.tab.PPAP);
-			$("#hchp").replaceWith(x.tab.PTEC.split(':').shift());
-			x.tab.IINST.search('0 A') ? y=x.tab.IINST : y=x.tab.IINST1+x.tab.IINST2+x.tab.IINST3;
-			$("#iinst").html(y);
-			y=x.tab.PTEC.split(':').pop(); // y=coul_tempo
-			if(y!='#') {
-			//alert('y = ' + y);
-				var z;
-				y!='#FFFFFF' ? z=$('.info_conso').css( "color" ) : z=$('.default').css( "background-color" );
-				$(".hchp_coul a").css({"background-color": y, 'color': z.toString(),'font-size':'13px'});
-			}
-		});
+function need_data () {
+	$.ajax({
+		url:"sarah/TeleinfoRemote",
+		type:'post',
+		dataType:'json'
+		}).done(function( msg ) {
+		var y=new Date(msg.maj);
+		$('#maj').html(y.getHours()+'h'+(y.getMinutes()<10?'0':'')+y.getMinutes());
+		$('#compteur').html(msg.numCpt);
+		$('#isousc').html(msg.tab.ISOUSC);
+		$('#optarif').html(msg.tab.OPTARIF);
+		msg.tab.IINST==0?$('#mono_tri').html('MONO'):$('#mono_tri').html('Triphasé');
+		$("#conso").html(msg.tab.PPAP);
+		$("#hchp").replaceWith(msg.tab.PTEC.split(':').shift());
+		msg.tab.IINST.search('0 A') ? y=msg.tab.IINST : y=msg.tab.IINST1+msg.tab.IINST2+msg.tab.IINST3;
+		$("#iinst").html(y);
+
+		y=msg.tab.PTEC.split(':').pop(); // y=coul_tempo
+		y!='#FFFFFF' ? $('.hchp_coul a').css({"background-color":y,'color':'#FFFFFF'}):
+			$('.hchp_coul a').css({"background-color":y,'color': $('#maj').css('color')});
+		if (y=='#') $('.hchp_coul a').css({"background-color": 'transparent','color': $('#maj').css('color')});
+
+		msg.tab.IMAX.search('0 A') ? y=msg.tab.IMAX : y=msg.tab.IMAX1+msg.tab.IMAX2+msg.tab.IMAX3;
+		$("#imax").html(y);
+
+		y=msg.tab.DEMAIN.split(':').pop(); // y=dem_coul
+		y!='#FFFFFF' ? $('.dem_coul a').css({"background-color":y,'color':'#FFFFFF','opacity':'1'}):
+			$('.dem_coul a').css({"background-color":y,'color': $('#maj').css('color'),'opacity':'1'});
+		if (y=='#') $('.dem_coul a').css({"background-color":"transparent","color":$('#maj').css('color'),"opacity":"0.3"});
+
+		msg.tab.PEJP!='0' ? $(".info_pejp a").css({"background-color":"#FF0000","color":'#FFFFFF',"opacity":"1"}):
+			$(".info_pejp a").css({'background-color':'transparent',"color":$('#maj'),'opacity':'0.3'});
+	//}).fail(function() {
+	//	alert( "erreur de chargement des données..." );
 	});
-});
-//var auto_refresh = setInterval(
-//function() {
-//$("#").load('sarah/TeleinfoRemote?need=1');
-//$("#").load('sarah/TeleinfoRemote?need=1');
-//}, 60000); 
+}
+
 </script>
-
-<div>	
-	<span class="title_encours">Mis à jour à&nbsp;
-		<a id="maj"></a>&nbsp;prochaine dans&nbsp;
-		<a id="next_maj"></a>
-	</span>
+	
+<div class="title_encours">
+	Mise à jour à :&nbsp;<span id="maj"></span>&nbsp;
+	<span id='timer_on'></span>&nbsp;<span id="next_maj"></span>
 </div>
 
-<div>
-	<span class="info_conso">Tarif :
-		<span class="hchp_coul">
-			<a>&nbsp;<span id="hchp"></span>&nbsp;</a>
-			&nbsp;Conso.:
-		</span>
-		<span class="conso_ppap">
-			<a>&nbsp;<span  id="conso"></span>&nbsp;
-			</a>&nbsp;
-			<a>&nbsp;
-				<span id="iinst"></span>&nbsp;
-			</a>&nbsp;
-		</span>
-	</span>
+<div class="info_conso">Tarif
+	<span class="hchp_coul"><a>&nbsp;<span id="hchp"></span>&nbsp;</a>&nbsp;Conso.</span>
+	<span class="conso_ppap"><a>&nbsp;
+		<span  id="conso"></span>&nbsp;</a>&nbsp;<a>&nbsp;<span id="iinst"></span>&nbsp;</a>&nbsp;</span>
 </div>
 
-<div>	
-	<span class="title_avenir">Options & infos :</span>
-</div>
+<div class="title_avenir">Options & infos :</div>
 
-<div>
-	<span class="info_tempo">Tempo :
-			<%if(tabEco.tab.DEMAIN.split(':').pop()=='#FAF0E6'){%>
-		<span style="border: 1px solid;color: #33A3EC">
-			&nbsp;<%= a(tabEco.tab.DEMAIN,1) %>&nbsp;</span><%}else{%>
-		<span style="background: <%= tabEco.tab.DEMAIN.split(':').pop() %>;border: 1px solid #33A3EC">
-			&nbsp;Demain&nbsp;</span><%}%>
-	</span>
+<div class="info_demain">I max.
+	<span class="info_imax"><a>&nbsp;<span id='imax'></span>&nbsp;</a>&nbsp;</span>
+	<span class="dem_coul">Alertes&nbsp;<a>&nbsp;DEMAIN&nbsp;</a></span>
+	<span class="info_pejp"><a>&nbsp;EJP&nbsp;</a></span>
 </div>
 
 <%}%>
+<script>
+$(document).ready(
+  function() {
+	$("#img_logo").click(function(){
+			need_data();
+	});
+});
+</script>
 
-<div>
-	<span class="logo" id="img_logo" title="Mettre à jour"></span>
+<div class="logo"><span id="text_logo"><%= key %></span></div>
+
+<div class="icon"><span id="img_logo" title="Mettre à jour"><img src="/assets/teleinforemote/img/maison.png" /></span></div>
+
+
+<div class="ecodev">
+	<%	var cfg = SARAH.ConfigManager.getConfig().modules.TeleinfoRemote;
+		var httpEcodev = 'http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/index1.htm';
+	%>
+	<a id="www" href=<%= httpEcodev %> title="Lien vers Téléinfo"><img src="/assets/teleinforemote/img/gce.png" /></a>
 </div>
 
