@@ -18,8 +18,10 @@
 /*--- Titre ---*/
 .plugin-gridster.TeleinfoRemote .plugin {
   position            : absolute;
-  top                 : 2px;
   font-weight         : bold;
+  margin              : 0 auto;
+  top                 : 4px; left: 0; right: 0;
+  text-align          : center;
 }
 
 /*--- Logo ---*/
@@ -59,14 +61,11 @@
   top                 : 8px;
   transform           : rotate(-90deg) translateX(-100%);
   transform-origin    : left top;
-
 }
 
 /*--- Info Abo dans titre page ---*/
-.info_abo a {
-  /*background-color: #FF69B4;
-  color           : #FAF0E6;
-  border          : 1px solid #000;*/
+.plugin-gridster.TeleinfoRemote .info_abo  a, .info_abo2 a{
+  /*background-color: #FF69B4;*/
   color               : #FAF0E6;
   border              : 1px solid;
 }
@@ -96,7 +95,7 @@
 }
 
 .plugin-gridster.TeleinfoRemote .info_conso {
-  margin-top          : 40px;
+  margin-top          : 42px;
 }
 
 .plugin-gridster.TeleinfoRemote .title_avenir {
@@ -104,7 +103,7 @@
 }
 
 .plugin-gridster.TeleinfoRemote .info_demain {
-  margin-top          : 80px;
+  margin-top          : 82px;
 }
 
 .info_conso a, .info_demain a {
@@ -122,12 +121,13 @@
 
 .plugin-gridster.TeleinfoRemote .ecodev {
   background: transparent;
-  width: 90px;
-  height: 50px;
+  width: 110px;
+  /*height: 60px;*/
   margin: auto;
   position: absolute;
-  left: 0; bottom: -15px; right: 0;
+  left: 0; bottom: 8px; right: 0;
  }
+
 .plugin-gridster.TeleinfoRemote #www:hover {
   opacity: 0.3;
 }

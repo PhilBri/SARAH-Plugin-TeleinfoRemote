@@ -1,35 +1,61 @@
 <% stylesheet('assets/'+key+'/portlet.css') %>
 
-<%if(!SARAH.context.TeleinfoRemote.tab.OPTARIF){%>
+<div class='static'>
 	<div class='default'>
-		<span class='plugin'>Téléinfo&nbsp;-
-			<span class="info_abo">
-				<a>&nbsp;<span id="compteur"><%= SARAH.context.TeleinfoRemote.numCpt%></span>&nbsp;</a>&nbsp;:
-				<a>&nbsp;INDISPONIBLE&nbsp;</a>
-			</span>
-		</span>
-	</div>
-<%}else{%>
-	<div class='default'>
-		<span class='plugin'>&nbsp;&nbsp;Téléinfo&nbsp;-
+		<span class='plugin'>
 			<span class="info_abo">
 				<a>&nbsp;<span id="compteur"></span>&nbsp;</a>&nbsp;:
 				<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;
+			</span>
+			<span class='info_abo2'>
 				<a>&nbsp;<span id="optarif"></span>&nbsp;</a>&nbsp;
 				<a>&nbsp;<span id="mono_tri"></span>&nbsp;</a>
 			</span>
 		</span>
 	</div>
+	<div class="title_encours">
+		Mise à jour à :&nbsp;<span id="maj"></span>&nbsp;
+		<span id='timer_on'></span>&nbsp;<span id="next_maj"></span>
+	</div>
+</div>
+
+<div class="remove">
+	<div class="info_conso">Tarif
+		<span class="hchp_coul"><a>&nbsp;<span id="hchp"></span>&nbsp;</a>&nbsp;Conso.</span>
+		<span class="conso_ppap"><a>&nbsp;
+			<span id="conso"></span>&nbsp;</a>&nbsp;<a>&nbsp;<span id="iinst"></span>&nbsp;</a>&nbsp;</span>
+	</div>
+
+	<div class="title_avenir">Options & infos :</div>
+
+	<div class="info_demain">I max.
+		<span class="info_imax"><a>&nbsp;<span id='imax'></span>&nbsp;</a>&nbsp;</span>
+		<span class="dem_coul">Alertes&nbsp;<a>&nbsp;DEMAIN&nbsp;</a></span>
+		<span class="info_pejp"><a>&nbsp;EJP&nbsp;</a></span>
+	</div>
+</div>
+
+<script>
+
+$(document).ready(
+  function() {
+	$("#img_logo").click(function(){
+		need_data();
+	});
+});
+
+</script>
 
 <script type="text/javascript">
 
 window.onload=function() {
-	horloge();
+	//horloge();
 	need_data();
 };
  
 function horloge() {
 	var timer = <%- JSON.stringify(SARAH.ConfigManager.getConfig().modules.TeleinfoRemote.Timer) %>;
+	//var timer = '0.5';
 	if (isNaN(timer)){
 		$('#timer_on').html(' Timer :');
 		$('#next_maj').html('OFF')
@@ -47,84 +73,73 @@ function horloge() {
 		setInterval(actualiser, 1000);
 	}
 }
-
+// détachements
+var p=$('.remove').detach();
+var s=$('.info_abo2').detach();
+// MAJ HTML
 function need_data () {
+	horloge();
 	$.ajax({
-		url:"sarah/TeleinfoRemote",
-		type:'post',
-		dataType:'json'
-		}).done(function( msg ) {
+	url:"sarah/TeleinfoRemote",
+	type:'post',
+	dataType:'json'
+	}).done(function( msg ) {
+		// Vérif. validité des compteurs
+		if (msg.tab.OPTARIF) {
+			p.appendTo('.static');
+			s.appendTo('.info_abo');
+			$('#isousc').html(msg.tab.ISOUSC);
+		} else {
+			$('.remove').detach();
+			$('.info_abo2').detach();
+			$('#isousc').html('INDISPONIBLE');
+			//$('.info_abo a').css({'background-color': '#FF69B4'});
+		}
 		var y=new Date(msg.maj);
-		$('#maj').html(y.getHours()+'h'+(y.getMinutes()<10?'0':'')+y.getMinutes());
+		// N° compteur
 		$('#compteur').html(msg.numCpt);
-		$('#isousc').html(msg.tab.ISOUSC);
+		// Tarif
 		$('#optarif').html(msg.tab.OPTARIF);
-		msg.tab.IINST==0?$('#mono_tri').html('MONO'):$('#mono_tri').html('Triphasé');
-		$("#conso").html(msg.tab.PPAP);
+		// Timer maj
+		$('#maj').html(y.getHours()+'h'+(y.getMinutes()<10?'0':'')+y.getMinutes());
+		// Tarif en cours
 		$("#hchp").replaceWith(msg.tab.PTEC.split(':').shift());
+		// Consommation
+		$("#conso").html(msg.tab.PPAP);
+		// Intensité actuelle
+		msg.tab.IINST==0?$('#mono_tri').html('MONO'):$('#mono_tri').html('Triphasé');
 		msg.tab.IINST.search('0 A') ? y=msg.tab.IINST : y=msg.tab.IINST1+msg.tab.IINST2+msg.tab.IINST3;
 		$("#iinst").html(y);
-
+		// Couleur tarif (tempo)
 		y=msg.tab.PTEC.split(':').pop(); // y=coul_tempo
 		y!='#FFFFFF' ? $('.hchp_coul a').css({"background-color":y,'color':'#FFFFFF'}):
 			$('.hchp_coul a').css({"background-color":y,'color': $('#maj').css('color')});
 		if (y=='#') $('.hchp_coul a').css({"background-color": 'transparent','color': $('#maj').css('color')});
-
+		// Intensité maxi atteinte
 		msg.tab.IMAX.search('0 A') ? y=msg.tab.IMAX : y=msg.tab.IMAX1+msg.tab.IMAX2+msg.tab.IMAX3;
 		$("#imax").html(y);
-
+		// Couleur de demain (tempo)
 		y=msg.tab.DEMAIN.split(':').pop(); // y=dem_coul
 		y!='#FFFFFF' ? $('.dem_coul a').css({"background-color":y,'color':'#FFFFFF','opacity':'1'}):
 			$('.dem_coul a').css({"background-color":y,'color': $('#maj').css('color'),'opacity':'1'});
 		if (y=='#') $('.dem_coul a').css({"background-color":"transparent","color":$('#maj').css('color'),"opacity":"0.3"});
-
+		// EJP avertissement 
 		msg.tab.PEJP!='0' ? $(".info_pejp a").css({"background-color":"#FF0000","color":'#FFFFFF',"opacity":"1"}):
 			$(".info_pejp a").css({'background-color':'transparent',"color":$('#maj'),'opacity':'0.3'});
 	//}).fail(function() {
 	//	alert( "erreur de chargement des données..." );
 	});
 }
-
-</script>
-	
-<div class="title_encours">
-	Mise à jour à :&nbsp;<span id="maj"></span>&nbsp;
-	<span id='timer_on'></span>&nbsp;<span id="next_maj"></span>
-</div>
-
-<div class="info_conso">Tarif
-	<span class="hchp_coul"><a>&nbsp;<span id="hchp"></span>&nbsp;</a>&nbsp;Conso.</span>
-	<span class="conso_ppap"><a>&nbsp;
-		<span  id="conso"></span>&nbsp;</a>&nbsp;<a>&nbsp;<span id="iinst"></span>&nbsp;</a>&nbsp;</span>
-</div>
-
-<div class="title_avenir">Options & infos :</div>
-
-<div class="info_demain">I max.
-	<span class="info_imax"><a>&nbsp;<span id='imax'></span>&nbsp;</a>&nbsp;</span>
-	<span class="dem_coul">Alertes&nbsp;<a>&nbsp;DEMAIN&nbsp;</a></span>
-	<span class="info_pejp"><a>&nbsp;EJP&nbsp;</a></span>
-</div>
-
-<%}%>
-<script>
-$(document).ready(
-  function() {
-	$("#img_logo").click(function(){
-			need_data();
-	});
-});
 </script>
 
 <div class="logo"><span id="text_logo"><%= key %></span></div>
 
 <div class="icon"><span id="img_logo" title="Mettre à jour"><img src="/assets/teleinforemote/img/maison.png" /></span></div>
 
-
 <div class="ecodev">
 	<%	var cfg = SARAH.ConfigManager.getConfig().modules.TeleinfoRemote;
 		var httpEcodev = 'http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/index1.htm';
 	%>
-	<a id="www" href=<%= httpEcodev %> title="Lien vers Téléinfo"><img src="/assets/teleinforemote/img/gce.png" /></a>
+	<a id="www" href=<%= httpEcodev %> title="Affichage page Téléinfo"><img src="/assets/teleinforemote/img/gce.png" /></a>
 </div>
 
