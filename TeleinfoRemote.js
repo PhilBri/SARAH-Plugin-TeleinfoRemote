@@ -9,17 +9,13 @@ var tabDev = {
 	'IINST':'% A','IINST1':'%-','IINST2':'%-','IINST3':'% A',
 	'ADPS':'% A',
 	'IMAX':'% A','IMAX1':'%-','IMAX2':'%-','IMAX3':'% A',
-	'PPAP':'% VA',
-	'HHPHC':'%'},cfg;
-
-exports.init = function ( SARAH ) {
-	cfg = SARAH.ConfigManager.getConfig().modules.TeleinfoRemote; 
-	console.log ('\nTeleinfoRemote[OK] ====>     init     <====');
-	SARAH.call('TeleinfoRemote',{'Host':cfg.Host,'User':cfg.User,'Password':cfg.Password});
-}
+	'PAPP':'% VA',
+	'HHPHC':'%'};
 
 exports.action = function ( data , callback , config , SARAH ) {
-	var numCpt ;
+	var cfg = SARAH.ConfigManager.getConfig().modules.TeleinfoRemote, 
+		numCpt ;
+
 	SARAH.context.TeleinfoRemote===undefined ? numCpt ='Compteur 1' : numCpt = SARAH.context.TeleinfoRemote.numCpt;
 	if (data.cpt!==undefined) numCpt = data.cpt;
  	numCpt == 'Compteur 1' ? cpt = 'T1' : cpt = 'T2';
@@ -53,20 +49,14 @@ exports.action = function ( data , callback , config , SARAH ) {
 			} else console.log( '\nTeleinfoRemote [OK] => Mise à jour portlet...' );
 
 			SARAH.context.TeleinfoRemote= { 'numCpt':numCpt, 'maj': new Date(), 'tab': tabPlug };
-
-			// tests
-			//SARAH.context.TeleinfoRemote.tab.PTEC = 'Heures Pleines:#FF0000';
-			//SARAH.context.TeleinfoRemote.tab.OPTARIF = 'EJP';
-			//SARAH.context.TeleinfoRemote.tab.DEMAIN = 'Rouge:#FF0000';
-			//SARAH.context.TeleinfoRemote.tab.PEJP = '30';
-			//SARAH.context.TeleinfoRemote.numCpt = 'Compteur 2';
-			// tests end
 			
 			if (data.need) SARAH.speak(data.need);
 			callback({'tts':JSON.stringify(SARAH.context.TeleinfoRemote)});
-			console.log('\nValeurs :........................\n');
-			console.log(SARAH.context.TeleinfoRemote);
 		});
 	}
-	require ('http').request('http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/protect/settings/teleinfo' + cpt[1] + '.xml', clbk).end();
+	var a =	require ('http').request('http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/protect/settings/teleinfo' + cpt[1] + '.xml', clbk);
+	a.end();
+	a.on ( 'error', function ( error ) {
+		console.log ( '\nTeleinfoRemote [Erreur] => ' + error.message );
+	}); 
 }
