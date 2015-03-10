@@ -6,14 +6,36 @@
     
     <one-of>
       <item>Met à jour les données télé info
-        <tag>out.action._attributes.tts="Mise à jour des données effectuée";</tag>
+        <tag>out.action.ttsAction="Mise à jour des données effectuée";</tag>
       </item>
       <item>Affiche le compteur 1
-        <tag>out.action.cpt="Compteur 1" ; out.action._attributes.tts="Affichage du compteur numéro 1,";</tag>
+        <tag>out.action.cpt="Compteur 1"; out.action.ttsAction="Affichage du compteur numéro 1,";</tag>
       </item>
+      <item>Affiche le compteur 2
+        <tag>out.action.cpt="Compteur 2"; out.action.ttsAction="Affichage du compteur numéro 2,";</tag>
+      </item>
+      <item>Active les alertes
+        <tag>out.action.set_alert="ON"; out.action.ttsAction="Les alertes sont activées";</tag>
+      </item>
+      <item>Désactive les alertes
+        <tag>out.action.set_alert=""; out.action.ttsAction="Les alertes sont désactivées";</tag>
+      </item>
+      <item>Quel est l'état des alertes
+        <tag>out.action.get_alert="GET"; out.action.ttsAction="Les alertes sont %";</tag>
+      </item>
+      <item>Active le timer
+        <tag>out.action.set_timer="ON"; out.action.ttsAction="Le timer est activé";
+          out.action.bad_req="Activation impossible, configurez le plug in";
+        </tag>
+      </item>
+      <item>Désactive le timer
+        <tag>out.action.set_timer="OFF"; out.action.ttsAction="Le timer est désactivé";</tag>
+      </item>
+      <!-- old 
       <item>Affiche le compteur 2
         <tag>out.action.cpt="Compteur 2" ; out.action._attributes.tts="Affichage du compteur numéro 2,";</tag>
       </item>
+      old -->
       <item>Quelle est la couleur de demain
         <tag>out.action.tag="DEMAIN" ; out.action.ttsAction="La couleur de demain est %";</tag>
       </item>
@@ -21,7 +43,7 @@
         <tag>out.action.tag="PTEC" ; out.action.ttsAction="Vous étes en tarif %";</tag>
       </item>
       <item>Quelle est la consommation
-        <tag>out.action.tag="PPAP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
+        <tag>out.action.tag="PAPP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
       </item>
       <item>Quelle est la puissance
         <tag>out.action.tag="IINST" ; out.action.ttsAction="La puissance instantanée est de % ampères";</tag>

@@ -1,18 +1,12 @@
-<!DOCTYPE html>
 <% stylesheet('assets/'+key+'/portlet.css') %>
-<html>
 <div class='static'>
-	<div class='default'>
-		<span class='plugin'>
-			<span class="info_abo">
-				<a>&nbsp;<span id="compteur"></span>&nbsp;</a>&nbsp;:
-				<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;
-			</span>
-			<span class='info_abo2'>
-				<a>&nbsp;<span id="optarif"></span>&nbsp;</a>&nbsp;
-				<a>&nbsp;<span id="mono_tri"></span>&nbsp;</a>
-			</span>
-		</span>
+	<div class='plugin'>
+		<span class="info_abo">
+			<a>&nbsp;<span id="compteur"></span>&nbsp;</a>&nbsp;:
+			<a>&nbsp;<span id='isousc'></span>&nbsp;</a>&nbsp;</span>
+		<span class='info_abo2'>
+			<a>&nbsp;<span id="optarif"></span>&nbsp;</a>&nbsp;
+			<a>&nbsp;<span id="mono_tri"></span>&nbsp;</a></span>
 	</div>
 	<div class="title_encours">
 		Mise à jour à :&nbsp;<span id="maj"></span>&nbsp;
@@ -33,121 +27,124 @@
 
 	<div class="info_demain">I max.
 		<span class="info_imax">
-			<a>&nbsp;<span id='imax'></span>&nbsp;</a>&nbsp;</span>
-		<span class="dem_coul">Alertes&nbsp;
+			<a>&nbsp;<span id='imax'></span>&nbsp;</a></span>
+		<span class="alerts">
+			<a>&nbsp;Alertes&nbsp;</a></span>
+		<span class="dem_coul">
 			<a>&nbsp;DEMAIN&nbsp;</a></span>
 		<span class="info_pejp">
 			<a>&nbsp;EJP&nbsp;</a></span>
+
 	</div>
 </div>
 <div class="logo">
 	<span id="text_logo"><%= key %></span>
 </div>
 <div class="icon">
-	<span id="img_logo" title="Mettre à jour"><img src="/assets/teleinforemote/img/maison.png" /></span>
+	<span id="img_logo" title="Mettre à jour" ><img src="/assets/teleinforemote/img/maison.png" /></span>
 </div>
 <div class="ecodev">
 	<%	var cfg = SARAH.ConfigManager.getConfig().modules.TeleinfoRemote;
-		var httpEcodev = 'http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/index1.htm';
-	%>
+		var httpEcodev = 'http://'+cfg.User+':'+cfg.Password+'@'+cfg.Host+'/index1.htm'; %>
 	<a id="www" href=<%= httpEcodev %> title="Affichage page Téléinfo"><img src="/assets/teleinforemote/img/gce.png" /></a>
 </div>
-</html>
 
-
-<script type="text/javascript" src="/assets/teleinforemote/lib/socket.io.js"></script>
+<!-- Scripts -->
+<script type="text/javascript" src="/assets/teleinforemote/lib/socket.io/node_modules/socket.io-client/socket.io.js"></script>
 <script>
-
-$(document).ready(
-  function() {
-	$("#img_logo").click(function(){
-		need_data();
-	});
-});
-
-window.onload=function() {
-	need_data();
-};
-
-function horloge() {
-	var timer = <%- JSON.stringify(SARAH.ConfigManager.getConfig().modules.TeleinfoRemote.Timer) %>;
-	//var timer = '0.5';
-	if (isNaN(timer)){
+var tmr = '';
+// Socket
+var socket = io.connect('http://localhost:12345');
+socket.on('send_Data', function(data) {
+	maj_Data(data);
+	// Timer
+	if (isNaN(data.timer)) {
+		if(tmr) clearInterval(tmr);
 		$('#timer_on').html(' Timer :');
 		$('#next_maj').html('OFF')
 	} else {
 		$('#timer_on').html(' prochaine dans :');
-		my_timer=timer*60;
-		var str=my_timer;
-
-		function actualiser() {
-			my_timer > 60 ? str= Math.floor(my_timer/60) + 'm '+ my_timer % 60 + 's' : str = (my_timer<10?'0':'') + my_timer +'s';
-			$('#next_maj').html(str); 
-			if (my_timer === 0) {my_timer=timer*60; str=my_timer;$('#img_logo').trigger('click');};
-			my_timer-=1;
-		}
-		setInterval(actualiser, 1000);
-	}
+		timer = data.timer;
+		my_timer = timer*60;
+		str = my_timer;
+		if (tmr != '') clearInterval(tmr);
+		tmr = setInterval(actualiser, 1000);
+	}	
+});
+// Init
+socket.emit('status', 'ready');
+// Timer refresh
+function actualiser() {
+	my_timer > 60 ? str= Math.floor(my_timer/60) + 'm '+ my_timer % 60 + 's' : str = (my_timer<10?'0':'') + my_timer +'s';
+	$('#next_maj').html(str); 
+	if (my_timer === 0) {my_timer = timer*60; str = my_timer; $('#img_logo').trigger('click');};
+	my_timer -= 1;
 }
-// détachements
-var p=$('.remove').detach();
-var s=$('.info_abo2').detach();
-// MAJ HTML
-function need_data () {
-	horloge();
-
-	$.ajax({
-	url:"sarah/TeleinfoRemote",
-	type:'post',
-	dataType:'json'
-	}).done(function( msg ) {
-		// Vérif. validité des compteurs
-		if (msg.tab.OPTARIF) {
-			p.appendTo('.static');
-			s.appendTo('.info_abo');
-			$('#isousc').html(msg.tab.ISOUSC);
-		} else {
-			$('.remove').detach();
-			$('.info_abo2').detach();
-			$('#isousc').html('INDISPONIBLE');
-			//$('.info_abo a').css({'background-color': '#FF69B4'});
-		}
-		var y=new Date(msg.maj);
-		// N° compteur
-		$('#compteur').html(msg.numCpt);
-		// Tarif
-		$('#optarif').html(msg.tab.OPTARIF);
-		// Timer maj
-		$('#maj').html(y.getHours()+'h'+(y.getMinutes()<10?'0':'')+y.getMinutes());
-		// Tarif en cours
-		$("#hchp").replaceWith(msg.tab.PTEC.split(':').shift());
-		// Consommation
-		$("#conso").html(msg.tab.PAPP);
-		// Mono/Tri
-		msg.tab.IINST1[0]==msg.tab.IINST[0]? $('#mono_tri').html('Triphasé'):$('#mono_tri').html('Monophasé');
-		// Intensité actuelle
-		$('#mono_tri').text()=='Triphasé' ? y=msg.tab.IINST1+msg.tab.IINST2+msg.tab.IINST3 : y=msg.tab.IINST;
-		$("#iinst").html(y);
-		// Couleur tarif (tempo)
-		y=msg.tab.PTEC.split(':').pop(); // y=coul_tempo
-		y!='#FFFFFF' ? $('.hchp_coul a').css({"background-color":y,'color':'#FFFFFF'}):
-			$('.hchp_coul a').css({"background-color":y,'color': $('#maj').css('color')});
-		if (y=='#') $('.hchp_coul a').css({"background-color": 'transparent','color': $('#maj').css('color')});
-		// Intensité maxi atteinte
-		$('#mono_tri').text()=='Triphasé' ? y=msg.tab.IMAX1+msg.tab.IMAX2+msg.tab.IMAX3 : y=msg.tab.IMAX;
-		$("#imax").html(y);
-		// Couleur de demain (tempo)
-		y=msg.tab.DEMAIN.split(':').pop(); // y=dem_coul
-		y!='#FFFFFF' ? $('.dem_coul a').css({"background-color":y,'color':'#FFFFFF','opacity':'1'}):
-			$('.dem_coul a').css({"background-color":y,'color': $('#maj').css('color'),'opacity':'1'});
-		if (y=='#') $('.dem_coul a').css({"background-color":"transparent","color":$('#maj').css('color'),"opacity":"0.3"});
-		// EJP avertissement 
-		msg.tab.PEJP!='0' ? $(".info_pejp a").css({"background-color":"#FF0000","color":'#FFFFFF',"opacity":"1"}):
-			$(".info_pejp a").css({'background-color':'transparent',"color":$('#maj'),'opacity':'0.3'});
-	}).fail(function() {
-		//alert( "erreur de chargement des données..." );
-		$('#compteur').html('AUCUNE CONNEXION');
+// House logo click
+document.getElementById("img_logo").onclick = function() {
+	socket.emit('status', 'ready');
+};
+// Detachments
+var p = $('.remove').detach();
+var s = $('.info_abo2').detach();
+// HTML refresh
+function maj_Data (msg) {
+	// Vérif. validité des compteurs
+	if (msg.tab.OPTARIF) {
+		p.appendTo('.static');
+		s.appendTo('.info_abo');
+		$('#isousc').html(msg.tab.ISOUSC);
+	} else {
+		$('.remove').detach();
+		$('.info_abo2').detach();
 		$('#isousc').html('INDISPONIBLE');
-	});
+		//$('.info_abo a').css({'background-color': '#FF69B4'});
+	}
+	// N° compteur
+	$('#compteur').html(msg.numCpt);
+	// Tarif
+	$('#optarif').html(msg.tab.OPTARIF);
+	// Timer maj
+	var y = new Date(msg.maj);
+	$('#maj').html(y.getHours() + 'h' + (y.getMinutes() < 10 ? '0':'') + y.getMinutes());
+	
+	// Tarif en cours
+	$("#hchp").html(msg.tab.PTEC.split(':').shift());
+
+	// Couleur tarif (tempo) &  (HP - PM en rouge)
+	y = msg.tab.PTEC.split(':').pop(); // y=coul_tempo
+	y != '#FFFFFF' ? $('.hchp_coul a').css({"background-color":y,'color':'#FFF'}):
+		$('.hchp_coul a').css({"background-color":y, 'color':$('#maj').css('color')});
+	// Couleur tarif (autres)
+	if (y == '#') $('.hchp_coul a').css({"background-color":'transparent', 'color':$('#maj').css('color')});
+
+	// Consommation
+	$("#conso").html(msg.tab.PAPP);
+
+	// Mono/Tri
+	msg.tab.IINST1[0] == msg.tab.IINST[0] ? $('#mono_tri').html('Triphasé') : $('#mono_tri').html('Monophasé');
+
+	// Intensité actuelle
+	$('#mono_tri').text() == 'Triphasé' ? y = msg.tab.IINST1 + msg.tab.IINST2 + msg.tab.IINST3 : y = msg.tab.IINST;
+	$("#iinst").html(y);
+
+	// Intensité maxi atteinte
+	$('#mono_tri').text() == 'Triphasé' ? y = msg.tab.IMAX1 + msg.tab.IMAX2 + msg.tab.IMAX3 : y = msg.tab.IMAX;
+	$("#imax").html(y);
+
+	// Alertes
+	msg.alerts ? $(".alerts a").css({"opacity":"1"}) : $(".alerts a").css({'opacity':'0.3'});
+	
+	// Couleur de demain (tempo)
+	y = msg.tab.DEMAIN.split(':').pop(); // y=dem_coul
+	y != '#FFFFFF' ? $('.dem_coul a').css({"background-color":y, 'color':'#FFFFFF', 'opacity':'1'}):
+		$('.dem_coul a').css({"background-color":y,'color': $('#maj'),'opacity':'1'});
+	if (y == '#') $(".dem_coul a").css({"color":$('#maj').css('color'), "opacity":"0.3"});
+	
+	// Avertissement EJP (30 mn)
+	msg.tab.PEJP != '0' ? $(".info_pejp a").css({"background-color":"#F00", "color":'#FFF', "opacity":"1"}):
+		$(".info_pejp a").css({"color":$('#maj'), 'opacity':'0.3'});
+//	$('#compteur').html('AUCUNE CONNEXION');
+//	$('#isousc').html('INDISPONIBLE');
 }
 </script>

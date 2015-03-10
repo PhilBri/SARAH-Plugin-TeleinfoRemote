@@ -3,24 +3,25 @@
 .plugin-gridster.TeleinfoRemote .front{
   background-color    : #E6E6FA; /* Bleu trés clair */
   background-color    : #FAF0E6; /* coquille d'oeuf */
+  cursor              : default;
 }
 
-/*--- Titre fenetre ---*/
-.plugin-gridster.TeleinfoRemote .default {
-  position            : absolute;
-  background-color    : #D2B48C;
-  height              : 30px;
-  top                 : 0px;
-  right               : 0px;
-  left                : 30px;
+/*--- Supprimer soulignements ---*/
+.plugin-gridster.TeleinfoRemote a{
+  text-decoration     : none;
 }
 
 /*--- Titre ---*/
 .plugin-gridster.TeleinfoRemote .plugin {
   position            : absolute;
+  background-color    : #D2B48C;
+  height              : 30px;
+  top                 : 0 ;
+  left                : 30px;
+  right               : 0;
+  padding-top         : 5px;
   font-weight         : bold;
   margin              : 0 auto;
-  top                 : 4px; left: 0; right: 0;
   text-align          : center;
 }
 
@@ -36,13 +37,13 @@
 
 /*--- Icone : Position ---*/
 .plugin-gridster.TeleinfoRemote .icon {
-  position: absolute;
+  position            : absolute;
   background-color    : #F5DEB3;
   width               : 30px;
   height              : 30px;
   top                 : 0px;
   left                : 0px;
-  cursor: pointer;
+  cursor              : pointer;
 }
 
 /*--- Icone : Survol ---*/
@@ -86,7 +87,7 @@
   font-weight         : bold; 
 }
 
-#maj, #next_maj, #timer, #hchp, #iinst, #conso {
+#maj, #next_maj {
   color               : #33A3EC; 
 }
 
@@ -120,14 +121,17 @@
 }
 
 .plugin-gridster.TeleinfoRemote .ecodev {
-  background: transparent;
-  width: 110px;
-  /*height: 60px;*/
-  margin: auto;
-  position: absolute;
-  left: 0; bottom: 8px; right: 0;
- }
+  background          : transparent;
+  width               : 110px;
+  /*height            : 60px;*/
+  margin              : auto;
+  position            : absolute;
+  left                : 0;
+  bottom              : 8px;
+  right               : 0;
+}
 
 .plugin-gridster.TeleinfoRemote #www:hover {
-  opacity: 0.3;
+  opacity             : 0.3;
+  cursor              : pointer;
 }
