@@ -3,10 +3,10 @@
 		"TeleinfoRemote"  : {
 			"description" : "SARAH manage l'Eco Device TéléInfo",
 			"version" : "1.0",
-			"Host" : "elservices.noip.me",
-			"User" : "admin",
-			"Password" : "sarah",
-			"Timer" : "OFF",
+			"Host" : "",
+			"User" : "",
+			"Password" : "",
+			"Timer" : "",
 			"Alertes": "",
 			"w" : 2
 		}
