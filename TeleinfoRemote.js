@@ -64,6 +64,7 @@ exports.action = function (data , callback , config , SARAH) {
 				console.log('TeleinfoRemote [OK] => ' + data.ttsAction);
 			}
 			SARAH.context.TeleinfoRemote = {'numCpt':numCpt,'maj':new Date(),'timer':timer,'alerts':alerts,'tab':tabPlug};
+			if (SARAH.context.socket) SARAH.context.socket.emit('send_Data', SARAH.context.TeleinfoRemote);
 			console.log( '\rTeleinfoRemote [OK] => Mise à jour portlet...' );
 		});
 	}
