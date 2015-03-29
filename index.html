@@ -1,0 +1,240 @@
+<style type="text/css">
+.center {
+  display: block;
+  margin: auto;
+}
+h4, h5, .under {
+  text-decoration: underline;
+}
+h4, h5 {
+  font-weight: bold;
+}
+#trait {
+  border-top: 1px solid;
+  margin-left: auto;
+  margin-right: auto;
+  /*width : 25%;*/
+}
+.flotte {
+  float :left;
+  width: 60px;
+}
+.gauche {
+  margin-left: 150px;
+}
+</style>
+
+<div id="TeleinfoRemote">
+  <div class="row-fluid">
+    <div class="span8">
+      <script src="/assets/Teleinforemote/index.js"></script>
+      <p id="trait"></p>
+      <br>
+      <img src="/assets/teleinforemote/img/maison.png" class="flotte">
+      <p class="gauche">
+        <strong>Auteurs :</strong>
+        <a href="https://plus.google.com/+PhilBri/posts"> Phil Bri</a> & 
+        <a href="https://plus.google.com/109998221079549008120/posts"> Boris Loizeau</a><br>
+        <strong>Date :</strong> Février 2015<br>
+        <strong>Version :</strong> v 1.1
+      </p>
+      <br>
+      <p id="trait"></p>
+      <h4>Description :</h4>
+      <p>
+        <strong>TeleinfoRemote</strong> est un plugin qui permet de demander vocalement à <strong>S.A.R.A.H.</strong> l'état de votre consommation électrique remontée via le module <a href="http://gce-electronics.com/fr/nos-produits/409-teleinformation-ethernet-ecodevices.html">Téléinfo</a>, un appareil de la série "Eco-devices" de <a href="http://gce-electronics.com">GCE</a>.
+      </p>
+        Ce module est un dispositif connecté comprenant :
+        <ul>
+          <li>2 entrées de ligne de données Téléinfo.</li>
+          <li>2 entrées compteurs à impulsions configurables (Eau - Gaz - Fuel...).</li>
+        </ul>
+        <pre>Nota : Seules les 2 entrées Téléinfo sont gérées par <strong>TeleinfoRemote</strong>.</pre>
+      <p>
+        Une fois la commande désirée dictée à <strong>S.A.R.A.H.</strong>, <strong>TeleinfoRemote</strong> réalise la requète correspondante vers le module et vous en vocalise le retour.
+      </p>
+      <br>
+      <p id="trait"></p>
+      <h4>Fonctionnalités :</h4>
+      <p>
+        <strong>TeleinfoRemote</strong> gère les données de manière bi-directionnelle avec son portlet, les valeurs sont donc mises à jour instantanément lorsque :
+        <ul>
+          <li>Vous avez demandé une action à <strong>S.A.R.A.H.</strong> vocalement.</li>
+          <li>Vous avez cliqué sur le logo <strong>TeleinfoRemote</strong> <img style="width: 20px"src="/assets/teleinforemote/img/maison.png">
+        </ul>
+      </p>
+      <p>
+        Dans le premier cas, vous pouvez consulter le résultat des données Téléinfo demandées à <strong>S.A.R.A.H.</strong> dans le portlet.
+      </p>
+      <p>
+        Dans le second cas, le portlet demande directement à <strong>TeleinfoRemote</strong> d'effectuer une requète de mise à jour "globale" des valeurs, et il en affiche le résultat.
+      </p>
+      <br>
+      <p id="trait"></p>
+      <h4>Configuration :</h4>
+      <p>
+        La configuration de <strong>TeleinfoRemote</strong> s'effectue via le portlet :
+      </p>
+      <img class="center" src="/assets/TeleinfoRemote/img/portlet_vide.png">
+      <ul>
+        <li>Retournez le portlet en cliquant sur : <img style="width: 25px;" src="/assets/TeleinfoRemote/img/portlet_return.png"></li>
+        <li>Au dos du portlet, cliquez sur : <img style="width: 30px;" src="/assets/TeleinfoRemote/img/wrench.png"></li>
+      </ul>
+      Vous obtenez alors, l'écran suivant :
+      <p>
+        <img class="center" style="width:40%" src="/assets/TeleinfoRemote/img/teleinfo_config.png">
+      </p>
+      <br>
+      <div class="tabbable">
+        <ul class="nav nav-tabs">
+          <li class="active"><a href="#reseau" data-toggle="tab">Réseau</a></li>
+          <li><a href="#timer" data-toggle="tab">Timer</a></li>
+          <li><a href="#alerts" data-toggle="tab">Alertes</a></li>
+          <li><a href="#affiche" data-toggle="tab">Portlet</a></li>
+          <li><a href="#commands" data-toggle="tab">Commandes</a></li>
+          <li><a href="#remarks" data-toggle="tab">Remarques</a></li>
+          <li><a href="#thanks" data-toggle="tab">Remerciements</a></li>
+        </ul>
+        <div class="tab-content">
+          <div class="tab-pane active" id="reseau"><br><p><h5>Configuration de l'accés réseau :</h5></p>
+            <p>Vous devez renseigner obligatoirement les champs suivants :</p>
+            <p><code>Host</code> = Adresse IP de votre module Téléinfo :
+              <pre>Host {192.168.0.1}</pre>
+            </p>
+            <p><code>User</code> = Nom d'utilisateur de votre module :
+              <pre>User {Toto}</pre>
+            </p>
+            <p><code>Password</code> = Mot de passe de votre module :
+              <pre>Password {123456}</pre>
+            </p>
+            <p>
+              En cas d'erreur de saisie, <strong>TeleinfoRemote</strong> vous avertira (vocalement et sur la concole)...
+            </p>
+          </div>
+          <div class="tab-pane" id="timer"><br><p><h5>Configuration du timer :</h5></p>
+            <p>
+              Vous pouvez relever automatiquement les données de votre module Téléinfo toutes les <code>X</code> minutes en paramètrant un <code>Timer</code>...
+            </p>
+            <p>
+              <strong>S.A.R.A.H.</strong> ne vocalisera pas le retour de ces rélévés automatiques, mais ils permettront la mise à jour automatique du portlet de <strong>TeleinfoRemote</strong>.
+            </p>
+            <p><code>Timer</code> = Délai de mise à jour (minutes) :
+              <pre>Timer {10} - Timer {0.5} - Timer {OFF} - Timer{}</pre>
+              <ul>
+                <li>Les valeurs décimales sont admises (<code>0.5</code> pour 30 secondes).</li>
+                <li>Pour désactiver le timer, il suffit de laisser le champ vide ou de le mettre à <code>OFF</code>.</li>
+              </ul>
+            </p>
+            Si le Timer est activé, le portlet affiche :
+            <ul>
+              <li>L'heure de la dernière mise à jour</li>
+              <li>Le temps restant jusqu'à la prochaine mise à jour.</li>
+            </ul>
+          </div>
+          <div class="tab-pane" id="alerts"><br><p><h5>Configuration des Alertes :</h5></p>
+            <p>
+              Suivant l'abonnement souscrit auprés de votre fournisseur d'électricité, vous pouvez choisir de surveiller les "alertes" suivantes :
+              <ul>
+                <li>Changement de tarif en cours (option <strong>HC/HP</strong> - <strong>Tempo</strong>).</li>
+                <li>Changement de "couleur" (option <strong>Tempo</strong>).</li>
+                <li>Préavis "EJP" (option <strong>EJP</strong>).</li>
+              </ul>
+            </p>
+            <p>
+              Pour ce faire, vous renseignerez le champ correspondant.
+            </p>
+            <p><code>Alertes</code> = Activation/désactivation des alertes :
+              <pre>Alertes {ON} - Alertes {OFF} - Alertes {}</pre>
+            </p>
+            <p>
+              Si la valeur est <code>ON</code>, les alertes sont activées. Dans tous les autres cas, elles ne seront pas prises en compte.
+            </p>
+            <p>
+              La fréquence de détection des alertes se fera suivant la valeur paramétrée dans le <code>Timer</code>...
+            </p>
+            <p>
+              <em>
+                Pour que la détection des alertes fonctionne, vous devez absolument avoir paramétré un délai de mise à jour via le champ <code>Timer</code>. Sinon, la commande sera ignorée...
+              </em>
+            </p>
+          </div>
+          <div class="tab-pane" id="affiche"><br><p><h5>Exemple d'affichage du portlet :</h5></p>
+            <p>
+              Une fois l'ensemble des paramètres de configuration renseignés, vous devez obtenir un portlet de ce style :
+            </p>
+            <img class="center" style="width:40%" src="/assets/TeleinfoRemote/img/capture.png">
+            <br>
+            <a class="under">Dans le titre de la fenêtre du portlet :</a>
+            <ul>
+              <li>L'affichage du compteur actuel : "Compteur 1".</li>
+              <li>La puissance souscrite : "40 A" (Ampères).</li>
+              <li>L'abonnement chez le fournisseur : "HC/HP" (Heures creuses).</li>
+              <li>Le nombre de phases : "Triphasé".</li>
+            </ul>
+            <a class="under">Dans le corps du portlet, section "mise à jour" :</a>
+            <ul>
+              <li>L'heure de la dernière mise à jour : "17h29".</li>
+              <li>L'état du Timer : "OFF"</li>
+              <li>Le tarif en cours : "Heures pleines".</li>
+              <li>La consommation instantanée : "1060 VA" (Volts Ampéres).</li>
+              <li>L'intensité sur chaque phase : "3-2-4 A" (Ampéres).</li>
+            </ul>
+            <a class='under'>Dans le corps du portlet, section "infos & options" :</a>
+            <ul>
+              <li>L'intensité maximale relevée sur chaque phase : "52-49-52 A" (Ampéres).</li>
+              <li>Le "témoin" de la mise en place des alertes : (Désactivé).</li>
+              <li>La couleur du tarif du lendemain : (Désactivé => Option "tempo" uniquement).</li>
+              <li>Le témoin d'alerte EJP : (désactivé => Option "EJP" uniquement).</li>
+            </ul>
+          </div>
+          <div class="tab-pane" id="commands"><br><p><h5>Description des commandes :</h5></p>
+            <p>
+              La configuration des requêtes vocales passe par le fichier externe : <code>TeleinfoRemote.xml</code>, ce fichier est aisément modifiable par vos soins pour en changer le vocabulaire des phrases "clés" utilisées par <strong>S.A.R.A.H.</strong>.
+              <br>
+              Les commandes vocales permettent de consulter / mettre à jour l'ensemble des données disponibles dans le portlet.
+            </p>
+            <h5>Principales commandes vocales :</h5>
+            <pre><em>
+              SARAH met à jour les données Téléinfo.<br>
+              SARAH affiche le compteur 1 / compteur 2.<br>
+              SARAH active / désactive les alertes.<br>
+              SARAH quel est l'état des alertes ?</br>
+              SARAH active / désactive le timer.<br>
+              SARAH quelle est la couleur de demain ?<br>
+              SARAH quel est le tarif en cours ?<br>
+              SARAH quelle est la consommation ?<br>
+              SARAH quelle est la puissance souscrite ?<br>
+              SARAH quelle est l'intensité maxi ?
+            </em></pre>
+            <p>
+              <strong>TeleinfoRemote</strong> retourne, aprés chaque commande vocale, la valeur demandée ou confirme/infirme la bonne exécution de votre requète.
+            </p>
+          </div>
+          <div class="tab-pane" id="remarks"><br><p><h5>Remarques :</h5></p>
+            <p>
+              - <strong>TeleinfoRemote</strong> vous renseigne aussi sur l'état de la connexion avec son portlet via les messages de console suivants :
+              <pre>TeleinfoRemote [Info] => Connected...</pre>
+              <pre>TeleinfoRemote [Info] => Disconnected...</pre>
+            </p>
+            <p>
+              - <strong>TeleinfoRemote</strong> vous permet d'activer / désactiver le <code>Timer</code> et les <code>Alertes</code> depuis :
+              <ul>
+                <li>Le portlet.</li>
+                <li>Un ordre vocal.</li>
+              </ul>
+              Toutefois, la durée du <code>Timer</code> ne peut se paramétrer que depuis le portlet...
+            </p>
+          </div>
+          <div class="tab-pane" id="thanks"><br><p><h5>Remerciements :</h5></p>
+            <p>
+              A mon fidèle partenaire Boris Loizeau... (Qui nous trouve toujours du boulot !).<br>
+              A la communauté de <strong>S.A.R.A.H.</strong>
+            </p>
+          </div>
+        </div>
+      </div>
+        <br>
+        <p id="trait"></p>
+    </div>
+  </div>
+</div>
