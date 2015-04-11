@@ -19,10 +19,12 @@ socket.on('send_Data', function(data) {
 		tmr = setInterval(actualiser, 1000);
 	}	
 });
+
 // Init
 $( window ).load(function() {
 	socket.emit('status', 'ready');
 });
+
 // Timer refresh
 function actualiser() {
 	my_timer > 60 ? str= Math.floor(my_timer/60) + 'm '+ my_timer % 60 + 's' : str = (my_timer<10?'0':'') + my_timer +'s';
@@ -30,13 +32,16 @@ function actualiser() {
 	if (my_timer === 0) {my_timer = timer*60; str = my_timer; $('#img_logo').trigger('click');};
 	my_timer -= 1;
 }
+
 // House logo click
 document.getElementById("img_logo").onclick = function() {
 	socket.emit('status', 'ready');
 };
+
 // Detachments
 var p = $('.remove').detach();
 var s = $('.info_abo2').detach();
+
 // HTML refresh
 function maj_Data (msg) {
 	// Vérif. validité des compteurs
@@ -52,8 +57,10 @@ function maj_Data (msg) {
 	}
 	// N° compteur
 	$('#compteur').html(msg.numCpt);
+
 	// Tarif
 	$('#optarif').html(msg.tab.OPTARIF);
+
 	// Timer maj
 	var y = new Date(msg.maj);
 	$('#maj').html(y.getHours() + 'h' + (y.getMinutes() < 10 ? '0':'') + y.getMinutes());
@@ -65,6 +72,7 @@ function maj_Data (msg) {
 	y = msg.tab.PTEC.split(':').pop(); // y=coul_tempo
 	y != '#FFFFFF' ? $('.hchp_coul a').css({"background-color":y,'color':'#FFF'}):
 		$('.hchp_coul a').css({"background-color":y, 'color':$('#maj').css('color')});
+		
 	// Couleur tarif (autres)
 	if (y == '#') $('.hchp_coul a').css({"background-color":'transparent', 'color':$('#maj').css('color')});
 
