@@ -1,4 +1,4 @@
-# TeleinfoRemote
+#![](../master/img/maison.png) TeleinfoRemote
 
 Plugin for S.A.R.A.H. project by JP Encausse
 http://blog.encausse.net/s-a-r-a-h/
