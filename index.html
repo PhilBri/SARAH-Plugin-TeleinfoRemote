@@ -108,7 +108,7 @@ h4, h5 {
               <pre>Password {123456}</pre>
             </p>
             <p>
-              En cas d'erreur de saisie, <strong>TeleinfoRemote</strong> vous avertira (vocalement et sur la concole)...
+              En cas d'erreur de saisie, <strong>TeleinfoRemote</strong> vous avertira ( vocalement et sur la concole )...
             </p>
           </div>
           <div class="tab-pane" id="timer"><br><p><h5>Configuration du timer :</h5></p>
@@ -116,46 +116,51 @@ h4, h5 {
               Vous pouvez relever automatiquement les données de votre module Téléinfo toutes les <code>X</code> minutes en paramètrant un <code>Timer</code>...
             </p>
             <p>
-              <strong>S.A.R.A.H.</strong> ne vocalisera pas le retour de ces rélévés automatiques, mais ils permettront la mise à jour automatique du portlet de <strong>TeleinfoRemote</strong>.
+              <strong>S.A.R.A.H.</strong> ne vocalisera pas le retour de ces rélévés automatiques, mais ils permettront la mise à jour immédiate des données du portlet <strong>TeleinfoRemote</strong>.
             </p>
             <p><code>Timer</code> = Délai de mise à jour (minutes) :
-              <pre>Timer {10} - Timer {0.5} - Timer {OFF} - Timer{}</pre>
+              <pre>Timer {10} - Timer {0.5} - Timer {OFF} - Timer {}</pre>
               <ul>
                 <li>Les valeurs décimales sont admises (<code>0.5</code> pour 30 secondes).</li>
-                <li>Pour désactiver le timer, il suffit de laisser le champ vide ou de le mettre à <code>OFF</code>.</li>
+                <li>Pour annuler le timer, il suffit de laisser le champ vide ou de le mettre à <code>OFF</code>.</li>
               </ul>
             </p>
-            Si le Timer est activé, le portlet affiche :
+            <p><h5>Activation/Désactivation du timer :</h5></p>
+            <p>
+              Une fois la durée du <code>Timer</code> saisie, vous devez demander à <strong>S.A.R.A.H.</strong> de l'activer ou de le désactiver via la commande vocale :
+              <pre>SARAH active/désactive le timer.</pre>
+            </p>
+            Le portlet affiche :
             <ul>
-              <li>L'heure de la dernière mise à jour</li>
-              <li>Le temps restant jusqu'à la prochaine mise à jour.</li>
+              <li>L'heure de la dernière mise à jour.</li>
+              <li>Le décompte du temps restant jusqu'à la prochaine mise à jour si le <code>Timer</code> est activé.</li>
+              <li><strong>OFF</strong> si le <code>Timer</code> est désactivé.</li>
             </ul>
           </div>
           <div class="tab-pane" id="alerts"><br><p><h5>Configuration des Alertes :</h5></p>
             <p>
               Suivant l'abonnement souscrit auprés de votre fournisseur d'électricité, vous pouvez choisir de surveiller les "alertes" suivantes :
               <ul>
-                <li>Changement de tarif en cours (option <strong>HC/HP</strong> - <strong>Tempo</strong>).</li>
-                <li>Changement de "couleur" (option <strong>Tempo</strong>).</li>
-                <li>Préavis "EJP" (option <strong>EJP</strong>).</li>
+                <li>Changement de tarif en cours ( option <em>HC/HP</em> - <em>Tempo</em> ).</li>
+                <li>Changement de "couleur" ( option <em>Tempo</em> ).</li>
+                <li>Préavis "EJP" ( option <em>EJP</em> ).</li>
               </ul>
             </p>
             <p>
-              Pour ce faire, vous renseignerez le champ correspondant.
-            </p>
-            <p><code>Alertes</code> = Activation/désactivation des alertes :
-              <pre>Alertes {ON} - Alertes {OFF} - Alertes {}</pre>
-            </p>
-            <p>
-              Si la valeur est <code>ON</code>, les alertes sont activées. Dans tous les autres cas, elles ne seront pas prises en compte.
-            </p>
-            <p>
-              La fréquence de détection des alertes se fera suivant la valeur paramétrée dans le <code>Timer</code>...
+              Pour ce faire, vous devez avoir configuré une durée pour le <code>Timer</code> et l'avoir activé vocalement. La fréquence de détection des alertes étant égale à cette durée...
             </p>
             <p>
               <em>
-                Pour que la détection des alertes fonctionne, vous devez absolument avoir paramétré un délai de mise à jour via le champ <code>Timer</code>. Sinon, la commande sera ignorée...
+                Pour que la détection des alertes fonctionne, vous devez absolument avoir paramétré un délai de mise à jour via le champ <code>Timer</code> de l'écran de configuration. Dans le cas contraire, la commande sera ignorée...
               </em>
+            </p>
+            <p><h5>Activation/désactivation des alertes :</h5></p>
+            <p>
+              Les alertes seront activées vocalement par <strong>S.A.R.A.H.</strong>
+              <pre>SARAH active/désactive les alertes.</pre>
+            </p>
+            <p>
+              Si vous désactivez le <code>Timer</code>, les alertes le seront aussi... Toutefois, <strong>TeleinfoRemote</strong> garde en mémoire leur activation et, vous les retrouverez dés que vous réactiverez le <code>Timer</code>.
             </p>
           </div>
           <div class="tab-pane" id="affiche"><br><p><h5>Exemple d'affichage du portlet :</h5></p>
@@ -212,22 +217,40 @@ h4, h5 {
           </div>
           <div class="tab-pane" id="remarks"><br><p><h5>Remarques :</h5></p>
             <p>
-              - <strong>TeleinfoRemote</strong> vous renseigne aussi sur l'état de la connexion avec son portlet via les messages de console suivants :
+              - <strong>TeleinfoRemote</strong> vous renseigne aussi sur l'état de la connexion et de la mise à jour de son portlet via les messages de console suivants :
               <pre>TeleinfoRemote [Info] => Connected...</pre>
               <pre>TeleinfoRemote [Info] => Disconnected...</pre>
+              <pre>TeleinfoRemote [OK] => Updated...</pre>
             </p>
             <p>
               - <strong>TeleinfoRemote</strong> vous permet d'activer / désactiver le <code>Timer</code> et les <code>Alertes</code> depuis :
               <ul>
-                <li>Le portlet.</li>
-                <li>Un ordre vocal.</li>
+                <li>Le portlet ( durée du <code>Timer</code> ).</li>
+                <li>Un ordre vocal ( <code>Timer</code> et <code>Alertes</code> ).</li>
               </ul>
-              Toutefois, la durée du <code>Timer</code> ne peut se paramétrer que depuis le portlet...
+              - <strong>Toutefois</strong> :
+              <ul>
+                <li>La durée du <code>Timer</code> ne peut se paramétrer que depuis le portlet.</li>
+                <li>La durée de rafraîchissement des <code>Alertes</code> est celle du <code>Timer</code>.</li>
+                <li>L'arrêt/reprise du <code>Timer</code> entraîne celle des <code>Alertes</code>.</li>
+              </ul>
+            </p>
+            <p>
+              - <strong>TeleinfoRemote</strong> necessite que la largeur du <em>Portlet</em> soit double ( Paramêtre w=2 dans l'écran de configuration ).
+            </p>
+            <p>
+              - <strong>Connexion / déconnection</strong> :
+              <ul>
+                <li>Si vous quittez la page principale de <strong>S.A.R.A.H.</strong> <code>http://127.0.0.1:8080/home</code>, la connexion entre le portlet et le plugin sera perdue...</li>
+                <li>Le <code>Timer</code> et les <code>Alertes</code> ne seront plus disponibles.</li>
+                <li>Vous aurez le message de console suivant : </li><pre>TeleinfoRemote [INFO] => Disconnected...</pre>
+                <li>Vous retrouverez toutes les fonctionnalités du plugin en revenant sur la page principale...</li>
+              </ul>
             </p>
           </div>
           <div class="tab-pane" id="thanks"><br><p><h5>Remerciements :</h5></p>
             <p>
-              A mon fidèle partenaire Boris Loizeau... (Qui nous trouve toujours du boulot !).<br>
+              A mon fidèle partenaire Boris Loizeau... <em>( Qui nous trouve toujours du boulot ! )</em>.<br>
               A la communauté de <strong>S.A.R.A.H.</strong>
             </p>
           </div>

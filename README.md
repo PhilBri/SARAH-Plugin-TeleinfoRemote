@@ -12,15 +12,13 @@ http://marketplace.sarah.encausse.net/store
 
 Démarrez SARAH et lancez l'interface Web du client http://127.0.0.1:8080/home
 
-Une documentation en ligne est disponible via le plugin...
-
 Dans le portlet TeleinfoRemote, renseignez les champs suivants :
 ```
 - Host     : L'adresse (url) de votre Eco Devices Téléinfo.
 - User     : Votre nom d'utilisateur Téléinfo.
 - Password : Votre mot de passe Téléinfo.
 - Timer    : La durée du "timer" en minutes (ie : 0.5 pour 30s).
-- Alertes  : Surveille les changements de tarif et vous avertit (ON - OFF).
+- Alertes  : A venir...
 ```
 
 Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa taille.
@@ -38,12 +36,12 @@ Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa tail
 
 
 
-## TeleinfoRemote Notes
+### TeleinfoRemote Notes
 
 Si vous étes en _**``triphasé``**_, le plugin adaptera ses informations phase par phase.
 
 
 
-## News in this version
+### News in this version
 
 Le portlet est mis à jour interactivement à chaque demande via SARAH ou l'icône de mise à jour.

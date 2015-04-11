@@ -6,30 +6,38 @@
     
     <one-of>
       <item>Met à jour les données télé info
-        <tag>out.action.ttsAction="Mise à jour des données effectuée";</tag>
+        <tag>out.action.tts="Mise à jour des données effectuée";</tag>
       </item>
+      <!-- Compteurs -->
       <item>Affiche le compteur 1
-        <tag>out.action.cpt="Compteur 1"; out.action.ttsAction="Affichage du compteur numéro 1,";</tag>
+        <tag>out.action.cpt="Compteur 1"; out.action.tts="Affichage du compteur numéro 1,";</tag>
       </item>
       <item>Affiche le compteur 2
-        <tag>out.action.cpt="Compteur 2"; out.action.ttsAction="Affichage du compteur numéro 2,";</tag>
+        <tag>out.action.cpt="Compteur 2"; out.action.tts="Affichage du compteur numéro 2,";</tag>
       </item>
+      <!-- Alertes -->
       <item>Active les alertes
-        <tag>out.action.set_alert="ON"; out.action.ttsAction="Les alertes sont activées";</tag>
+        <tag>out.action.set_alert="Activé"; out.action.tts="Les alertes sont activées";
+          out.action.bad_req="Activation impossible, le timer n'est pas configuré";
+        </tag>
       </item>
       <item>Désactive les alertes
-        <tag>out.action.set_alert=""; out.action.ttsAction="Les alertes sont désactivées";</tag>
+        <tag>out.action.set_alert="Désactivé"; out.action.tts="Les alertes sont désactivées";</tag>
       </item>
       <item>Quel est l'état des alertes
-        <tag>out.action.get_alert="GET"; out.action.ttsAction="Les alertes sont %";</tag>
+        <tag>out.action.set_alert="GET"; out.action.tts="Les alertes sont ";</tag>
       </item>
+      <!-- Timer -->
       <item>Active le timer
-        <tag>out.action.set_timer="ON"; out.action.ttsAction="Le timer est activé";
+        <tag>out.action.set_timer="Activé"; out.action.tts="Le timer est activé";
           out.action.bad_req="Activation impossible, configurez le plug in";
         </tag>
       </item>
       <item>Désactive le timer
-        <tag>out.action.set_timer="OFF"; out.action.ttsAction="Le timer est désactivé";</tag>
+        <tag>out.action.set_timer="Désactivé"; out.action.tts="Le timer est désactivé";</tag>
+      </item>
+      <item>Quel est l'état du timer
+        <tag>out.action.set_timer="GET"; out.action.tts="Le timer est ";</tag>
       </item>
       <!-- old 
       <item>Affiche le compteur 2
@@ -37,22 +45,22 @@
       </item>
       old -->
       <item>Quelle est la couleur de demain
-        <tag>out.action.tag="DEMAIN" ; out.action.ttsAction="La couleur de demain est %";</tag>
+        <tag>out.action.tag="DEMAIN" ; out.action.tts="La couleur de demain est %";</tag>
       </item>
       <item>Quel est le tarif en cours
-        <tag>out.action.tag="PTEC" ; out.action.ttsAction="Vous étes en tarif %";</tag>
+        <tag>out.action.tag="PTEC" ; out.action.tts="Vous étes en tarif %";</tag>
       </item>
       <item>Quelle est la consommation
-        <tag>out.action.tag="PAPP" ; out.action.ttsAction="La consommation instantanée est de % Volts Ampère";</tag>
+        <tag>out.action.tag="PAPP" ; out.action.tts="La consommation instantanée est de % Volts Ampère";</tag>
       </item>
       <item>Quelle est la puissance
-        <tag>out.action.tag="IINST" ; out.action.ttsAction="La puissance instantanée est de % ampères";</tag>
+        <tag>out.action.tag="IINST" ; out.action.tts="La puissance instantanée est de % ampères";</tag>
       </item>
       <item>Quelle est la puissance souscrite
-        <tag>out.action.tag="ISOUSC" ; out.action.ttsAction="La puissance souscrite est de % ampères";</tag>
+        <tag>out.action.tag="ISOUSC" ; out.action.tts="La puissance souscrite est de % ampères";</tag>
       </item>
       <item>Quelle est l'intensité maxi
-        <tag>out.action.tag="IMAX" ; out.action.ttsAction="L'intensité maxi à été de % ampères";</tag>
+        <tag>out.action.tag="IMAX" ; out.action.tts="L'intensité maxi à été de % ampères";</tag>
       </item>
     </one-of>
 
