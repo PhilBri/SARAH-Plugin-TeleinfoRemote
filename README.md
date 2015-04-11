@@ -18,7 +18,6 @@ Dans le portlet TeleinfoRemote, renseignez les champs suivants :
 - User     : Votre nom d'utilisateur Téléinfo.
 - Password : Votre mot de passe Téléinfo.
 - Timer    : La durée du "timer" en minutes (ie : 0.5 pour 30s).
-- Alertes  : A venir...
 ```
 
 Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa taille.
@@ -44,4 +43,4 @@ Si vous étes en _**``triphasé``**_, le plugin adaptera ses informations phase 
 
 ### News in this version
 
-Le portlet est mis à jour interactivement à chaque demande via SARAH ou l'icône de mise à jour.
+Le portlet est mis à jour interactivement à chaque demande via SARAH ou l'icône !(./img/Maison.png)de mise à jour.
