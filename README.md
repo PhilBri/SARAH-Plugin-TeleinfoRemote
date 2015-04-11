@@ -43,5 +43,4 @@ Si vous étes en _**``triphasé``**_, le plugin adaptera ses informations phase 
 
 ### News in this version
 
-<img src="../master/img/maison.png" height="30" width="30">
-Le portlet est mis à jour interactivement à chaque demande via SARAH, via le timer, ou en cliquant l'icône ![](../master/img/maison.png) de mise à jour du plugin...
+Le portlet est mis à jour interactivement à chaque demande via SARAH, via le timer, ou en cliquant l'icône <img src="../master/img/maison.png" height="25" width="25"> de mise à jour du plugin...
