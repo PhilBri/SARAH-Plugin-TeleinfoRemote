@@ -43,4 +43,4 @@ Si vous étes en _**``triphasé``**_, le plugin adaptera ses informations phase 
 
 ### News in this version
 
-Le portlet est mis à jour interactivement à chaque demande via SARAH ou l'icône !(./img/Maison.png)de mise à jour.
+Le portlet est mis à jour interactivement à chaque demande via SARAH ou l'icône !(/img/Maison.png)de mise à jour.
