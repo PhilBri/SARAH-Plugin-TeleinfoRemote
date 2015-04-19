@@ -18,9 +18,8 @@ Une suveillance peut aussi être mise en place pour :
 - L'activation EJP. 
 
 
-
-
 #### TeleinfoRemote Setup
+
 
 Téléchargez le plugin TeleinfoRemote sur le MarketPlace de SARAH
 http://marketplace.sarah.encausse.net/store
@@ -36,11 +35,10 @@ Dans le portlet TeleinfoRemote, renseignez les champs suivants :
 - Alertes {on}		: Surveillance des changements de tarif (HC/HP - Tempo - EJP).
 ```
 
-Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa taille.
-
-
+Par ailleurs, le portlet doit avoir la valeur `"w" : 2` en ce qui concerne sa taille.
 
 #### TeleinfoRemote Exemples
+
 
 - Commandes vocales :
 	- "SARAH quelle est ma consommation ?".
@@ -69,7 +67,7 @@ Par ailleurs, le portlet doit avoir la valeur "w" : 2 en ce qui concerne sa tail
 
 #### ATTENTION
 
-Bien lire la documentation détaillée fournie (`**index.html**`) accessible, une fois le plugin installé, via l'interface de S.A.R.A.H. en cliquant sur le Portlet `**TéléinfoRemote**`.
+Bien lire la documentation détaillée fournie (*index.html*) accessible, une fois le plugin installé, via l'interface de S.A.R.A.H. en cliquant sur le Portlet TéléinfoRemote.
 
 
 
